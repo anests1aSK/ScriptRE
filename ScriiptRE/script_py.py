@@ -33,6 +33,16 @@ def ror13_hash(unhash):
     return hex(result)
 #functions = get_exported_functions(dll_path2)
 #print(hex((int(ror13_hash(functions[968]), 16) + int(ror13_hash(nameModule), 16)& 0xffffffff)))
+    
+def ror13_DoraRAT(unhash):
+    result = 0
+    for b in unhash:
+        result = ((result >> 13) | (result << (32 - 13))) & 0xffffffff
+        if b < ord('Z'):
+            result = (result + b) & 0xffffffff
+        else:
+            result = (result + (b + 0x78)) & 0xffffffff
+    return hex(result)
 
 for module in namesModule:
     functions = get_exported_functions(r"".join([dll_path , module])) 
